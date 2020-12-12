@@ -1,24 +1,28 @@
 ﻿@inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
-<div class="user-info">
-    <AuthorizeView>
-        <Authorizing>
-            <text>...</text>
-        </Authorizing>
-        <Authorized>
+<AuthorizeView>
+    <Authorizing>
+        <text style="float: right;">...</text>
+    </Authorizing>
+    <Authorized>
+        <MenuItem Style="float: right;">
             <img src="img/user.svg" />
-            <div>
-                <a href="authentication/profile" class="username">@context.User.Identity.Name</a>
-                <button class="btn btn-link sign-out" @onclick="BeginSignOut">Sign out</button>
-            </div>
-        </Authorized>
-        <NotAuthorized>
-            <a class="sign-in" href="authentication/register">Register</a>
-            <a class="sign-in" href="authentication/login">Log in</a>
-        </NotAuthorized>
-    </AuthorizeView>
-</div>
+            @context.User.Identity.Name
+        </MenuItem>
+        <MenuItem Style="float: right;" OnClick="BeginSignOut">
+            <Icon Type="logout"></Icon>Sign out
+        </MenuItem>
+    </Authorized>
+    <NotAuthorized>
+        <MenuItem Style="float: right;" RouterLink="authentication/register">
+            <Icon Type="plus-circle" Theme="outline" />Register
+        </MenuItem>
+        <MenuItem Style="float: right;" RouterLink="authentication/login">
+            <Icon Type="login" Theme="outline"></Icon>Log in
+        </MenuItem>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code{
     async Task BeginSignOut()

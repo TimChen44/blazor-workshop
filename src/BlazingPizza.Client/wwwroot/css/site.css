@@ -5,8 +5,7 @@ body, html {
 }
 
 body {
-    padding-top: 5rem;
-    flex-direction: column;
+    /*    flex-direction: column;*/
     font-family: 'quicksand';
     overflow-y: hidden;
 }
@@ -20,28 +19,18 @@ form {
 }
 
 .top-bar {
-    height: 5rem;
     background-color: rgb(192,0,0);
     background-image: linear-gradient(rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.25) 25%, rgba(0,0,0,0) 70%);
-    display: flex;
-    align-items: stretch;
-    color: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
-    padding: 0 3rem;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    z-index: 1030;
 }
 
 .logo {
-    display: flex;
 }
 
     .logo > img {
+        height: 46px;
         margin-right: 3rem;
         width: 9rem;
+        color: rgb(192,0,0);
     }
 
 .content {
@@ -241,9 +230,9 @@ form {
     padding: 0 1.5rem;
 }
 
-.order-total.hidden {
-    transform: translate3d(0, 4rem, 0);
-}
+    .order-total.hidden {
+        transform: translate3d(0, 4rem, 0);
+    }
 
     .order-total .total-price {
         font-weight: 700;
@@ -411,27 +400,27 @@ form {
     padding: 0 1rem;
 }
 
-    .dialog-body > div {
-        display: flex;
-        margin-top: 1rem;
-        align-items: center;
-    }
+.dialog-body > div {
+    display: flex;
+    margin-top: 1rem;
+    align-items: center;
+}
 
-    .dialog-body label {
-        text-align: right;
-        width: 200px;
-        margin: 0 1.5rem;
-    }
+.dialog-body label {
+    text-align: right;
+    width: 200px;
+    margin: 0 1.5rem;
+}
 
-    .dialog-body input, .dialog-body select {
-        flex-grow: 1;
-        width: unset;
-    }
+.dialog-body input, .dialog-body select {
+    flex-grow: 1;
+    width: unset;
+}
 
-    .dialog-body .size-label {
-        min-width: 110px;
-        text-align: right;
-    }
+.dialog-body .size-label {
+    min-width: 110px;
+    text-align: right;
+}
 
 .dialog .toppings {
     text-align: center;
@@ -454,9 +443,9 @@ form {
     font-size: 0.8rem;
 }
 
-.dialog .topping-price::before {
-    content: '£';
-}
+    .dialog .topping-price::before {
+        content: '£';
+    }
 
 .delete-topping {
     background: none;
@@ -466,9 +455,9 @@ form {
     cursor: pointer;
 }
 
-.delete-topping:hover {
-    color: yellow;
-}
+    .delete-topping:hover {
+        color: yellow;
+    }
 
 .form-message {
     padding: 0.5rem;
@@ -654,6 +643,7 @@ input[type=range] {
 .checkout-cols {
     display: flex;
 }
+
     .checkout-cols h4 {
         margin-bottom: 1.5rem;
     }

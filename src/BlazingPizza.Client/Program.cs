@@ -19,6 +19,8 @@ namespace BlazingPizza.Client
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
             builder.Services.AddScoped<OrderState>();
 
+            builder.Services.AddAntDesign();
+
             // Add auth services
             builder.Services.AddApiAuthorization<PizzaAuthenticationState>(options =>
             {
