@@ -3,24 +3,33 @@
 @inject OrderState OrderState
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
+@inject DrawerService DrawerSvr
+
 
 <div class="main">
-    <ul class="pizza-cards">
+    <Spin Spinning="loading">
         @if (specials != null)
         {
-            @foreach (var special in specials)
-            {
-                <li @onclick="@(() => OrderState.ShowConfigurePizzaDialog(special))" style="background-image: url('@special.ImageUrl')">
-                    <div class="pizza-info">
-                        <span class="title">@special.Name</span>
-                        @special.Description
-                        <span class="price">@special.GetFormattedBasePrice()</span>
-                    </div>
-                </li>
-            }
+            <div style="display: flex; flex-wrap: wrap;">
+                @foreach (var special in specials)
+                {
+                    <Card Loading="loading" Hoverable Style="width: 23%;margin:1%">
+                        <Cover>
+                            <img src="@special.ImageUrl" style="height:250px" />
+                        </Cover>
+                        <ChildContent>
+                            <div style=" display: flex; flex-direction: row; justify-content: space-between; margin: -12px;">
+                                <CardMeta Title="@special.Name" Description="@special.GetFormattedBasePrice()" />
+                                <Button OnClick="x=>ShowConfigurePizzaDialog(special)">  <Icon Type="shopping-cart" />ADD</Button>
+                            </div>
+                        </ChildContent>
+                    </Card>
+                }
+            </div>
         }
-    </ul>
+    </Spin>
 </div>
+
 
 <div class="sidebar">
     @if (Order.Pizzas.Any())
@@ -48,20 +57,28 @@
     </div>
 </div>
 
-<TemplatedDialog Show="OrderState.ShowingConfigureDialog">
-    <ConfigurePizzaDialog
-        Pizza="OrderState.ConfiguringPizza"
-        OnCancel="OrderState.CancelConfigurePizzaDialog"
-        OnConfirm="OrderState.ConfirmConfigurePizzaDialog" />
-</TemplatedDialog>
-
 @code {
     List<PizzaSpecial> specials;
     Order Order => OrderState.Order;
 
+    bool loading = false;
+
     protected override async Task OnInitializedAsync()
     {
+        loading = true;
         specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>("specials");
+        loading = false;
+    }
+
+    async void ShowConfigurePizzaDialog(PizzaSpecial special)
+    {
+        var configuringPizza = OrderState.CreateConfigurePizza(special);
+        var result = await DrawerSvr.CreateDialogAsync<ConfigurePizzaDialog, Pizza, Pizza>(configuringPizza, title: special.Name, width: 450);
+        if (result != null)
+        {
+            OrderState.AddConfigurePizza(result);
+            StateHasChanged();
+        }
     }
 
     async Task RemovePizza(Pizza configuredPizza)
@@ -71,4 +88,6 @@
             OrderState.RemoveConfiguredPizza(configuredPizza);
         }
     }
+
+
 }
