@@ -45,9 +45,9 @@
     }
 </div>
 <div style="margin-top:5px">
-    @foreach (var topping in Pizza.Toppings)
+    @foreach (var pizzaTopping in Pizza.Toppings)
     {
-        <Tag Mode="closeable" OnClose="()=>RemoveTopping(topping.Topping)">@topping.Topping.Name - @topping.Topping.GetFormattedPrice()</Tag>
+        <Tag @key="@pizzaTopping" Mode="closeable" OnClose="()=>RemoveTopping(pizzaTopping)">@pizzaTopping.Topping.Name - @pizzaTopping.Topping.GetFormattedPrice()</Tag>
     }
 </div>
 
@@ -56,7 +56,7 @@
 
 <Divider></Divider>
 <div>
-    <Button OnClick="OnCancel">Cancel</Button>    
+    <Button OnClick="OnCancel">Cancel</Button>
     <Button OnClick="OnConfirm">Order</Button>
 </div>
 
@@ -94,16 +94,8 @@
         }
     }
 
-    @*void AddTopping(Topping topping)
+    void RemoveTopping(PizzaTopping pizzaTopping)
     {
-        if (Pizza.Toppings.Find(pt => pt.Topping == topping) == null)
-        {
-            Pizza.Toppings.Add(new PizzaTopping() { Topping = topping });
-        }
-    }*@
-
-    void RemoveTopping(Topping topping)
-    {
-        Pizza.Toppings.RemoveAll(pt => pt.Topping == topping);
+        Pizza.Toppings.Remove(pizzaTopping);
     }
 }

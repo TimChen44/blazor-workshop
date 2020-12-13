@@ -6,13 +6,19 @@
         <text style="float: right;">...</text>
     </Authorizing>
     <Authorized>
-        <MenuItem Style="float: right;">
-            <img src="img/user.svg" />
-            @context.User.Identity.Name
-        </MenuItem>
-        <MenuItem Style="float: right;" OnClick="BeginSignOut">
-            <Icon Type="logout"></Icon>Sign out
-        </MenuItem>
+        <SubMenu Style="float: right;">
+            <TitleTemplate>
+                <img class="bar-img" src="img/user.svg" />
+                @context.User.Identity.Name
+            </TitleTemplate>
+            <ChildContent>
+                <MenuItem OnClick="BeginSignOut">
+                    <Icon Type="logout"></Icon>Sign out
+                </MenuItem>
+            </ChildContent>
+        </SubMenu>
+
+     
     </Authorized>
     <NotAuthorized>
         <MenuItem Style="float: right;" RouterLink="authentication/register">
