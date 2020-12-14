@@ -5,27 +5,25 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JSRuntime
 
-<div class="main">
-    <EditForm Model="OrderState.Order.DeliveryAddress" OnValidSubmit="PlaceOrder">
-        <div class="checkout-cols">
-            <div class="checkout-order-details">
-                <h4>Review order</h4>
+
+<Form Model="OrderState.Order.DeliveryAddress" OnFinish="PlaceOrder" LabelColSpan="6" WrapperColSpan="18">
+    <Row Gutter="16" Style="padding: 15px;">
+        <AntDesign.Col Span="12">
+            <Card Title="Review order" Style="width:100%;height:100%;">
                 <OrderReview Order="OrderState.Order" />
-            </div>
-
-            <div class="checkout-delivery-address">
-                <h4>Deliver to...</h4>
+            </Card>
+        </AntDesign.Col>
+        <AntDesign.Col Span="12">
+            <Card Title="Deliver to..." Style="width: 100%;height: 100%;">
                 <AddressEditor Address="OrderState.Order.DeliveryAddress" />
-            </div>
-        </div>
+            </Card>
+        </AntDesign.Col>
+    </Row>
+    <div style="text-align:center;">
+        <Button HtmlType="submit" Disabled="@isSubmitting" Type="@ButtonType.Primary" Size="@ButtonSize.Large">Place order</Button>
+    </div>
+</Form>
 
-        <button type="submit" class="checkout-button btn btn-warning" disabled="@isSubmitting">
-            Place order
-        </button>
-
-        <DataAnnotationsValidator />
-    </EditForm>
-</div>
 
 @code {
     bool isSubmitting;
