@@ -10,14 +10,20 @@ else if (!items.Any())
 }
 else
 {
-    <div class="list-group @ListGroupClass">
-        @foreach (var item in items)
-        {
-            <div class="list-group-item">
-                @Item(item)
-            </div>
-        }
-    </div>
+    <AntList Bordered DataSource="@items">
+        <ChildContent Context="item">
+            @Item(item)
+        </ChildContent>
+    </AntList>
+
+    @*<div class="list-group @ListGroupClass">
+                @foreach (var item in items)
+                {
+                    <div class="list-group-item">
+                        @Item(item)
+                    </div>
+                }
+        </div>*@
 }
 
 @code {
