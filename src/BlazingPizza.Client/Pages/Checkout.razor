@@ -7,14 +7,14 @@
 
 
 <Form Model="OrderState.Order.DeliveryAddress" OnFinish="PlaceOrder" LabelColSpan="6" WrapperColSpan="18">
-    <Row Gutter="16" Style="padding: 15px;">
+    <Row Gutter="16" Style="margin: 15px;">
         <AntDesign.Col Span="12">
-            <Card Title="Review order" Style="width:100%;height:100%;">
+            <Card Title="Review order" Style="height:100%;">
                 <OrderReview Order="OrderState.Order" />
             </Card>
         </AntDesign.Col>
         <AntDesign.Col Span="12">
-            <Card Title="Deliver to..." Style="width: 100%;height: 100%;">
+            <Card Title="Deliver to..." Style="height: 100%;">
                 <AddressEditor Address="OrderState.Order.DeliveryAddress" />
             </Card>
         </AntDesign.Col>

@@ -5,7 +5,6 @@ body, html {
 }
 
 body {
-    /*    flex-direction: column;*/
     font-family: 'quicksand';
     overflow-y: hidden;
 }
@@ -398,37 +397,6 @@ form {
         overflow-y: hidden;
     }
 
-.track-order-title {
-    background-color: #eee;
-    display: flex;
-    align-items: center;
-    padding: 1rem 3rem;
-}
-
-    .track-order-title h2 {
-        color: #c03939;
-        font-size: 1.3rem;
-        font-weight: 300;
-        margin: 0rem;
-        font-family: 'Bahnschrift', Arial, Helvetica, sans-serif;
-        text-transform: uppercase;
-    }
-
-.track-order-body {
-    flex-grow: 1;
-    display: flex;
-}
-
-.track-order-details {
-    overflow-y: auto;
-    padding: 1.5rem 3rem;
-    flex-grow: 1;
-}
-
-.track-order-map {
-    width: 350px;
-    flex-shrink: 0;
-}
 
 a.sign-in {
     background: none;
