@@ -7,14 +7,11 @@ body, html {
 body {
     font-family: 'quicksand';
     overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 form {
     width: 100%;
-}
-
-.form-group.row > .col-form-label {
-    text-align: right;
 }
 
 .top-bar {
@@ -85,14 +82,6 @@ form {
         padding: 0;
     }
 
-
-.price::before {
-    content: '￥';
-    font-weight: 300;
-    font-size: 1.2rem;
-    margin-right: 0.2rem;
-}
-
 .sidebar {
     background-color: #2b2b2b;
     display: flex;
@@ -151,38 +140,6 @@ form {
         padding: 0.4rem 1.2rem;
     }
 
-.checkout-button {
-    margin: auto;
-    display: block;
-    font-weight: 700;
-    border-radius: 20px;
-    padding: 0.4rem 1.2rem;
-}
-
-.cart-item {
-    background-color: #333333;
-    padding: 0.8rem 1.2rem;
-    border-radius: 6px;
-    font-weight: 100;
-    margin-top: 1rem;
-    position: relative;
-}
-
-    .cart-item .title {
-        font-weight: 700;
-    }
-
-    .cart-item ul {
-        padding: 0;
-        margin: 0.4rem 0.6rem;
-    }
-
-    .cart-item li {
-        list-style-type: none;
-        margin-left: 0rem;
-        font-size: 0.8rem;
-    }
-
 .empty-cart {
     text-align: center;
     margin: auto;
@@ -190,213 +147,6 @@ form {
     font-weight: 100;
     color: #676767;
 }
-
-.item-price {
-    font-weight: 500;
-}
-
-    .item-price::before {
-        content: '￥';
-        font-weight: 100;
-        margin-right: 0.3rem;
-    }
-
-.delete-item {
-    position: absolute;
-    top: 0;
-    right: 0;
-    content: 'X';
-    cursor: pointer;
-    color: #fff2cc;
-    width: 2rem;
-    height: 2rem;
-    text-align: center;
-}
-
-    .delete-item:hover {
-        text-decoration: none;
-        color: #fff2cc;
-        background-color: rgba(255,255,255,0.1);
-    }
-
-.configured-pizza-item {
-    display: flex;
-    flex-direction: row;
-}
-
-.dialog-container {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0,0,0,0.5);
-    z-index: 2000;
-    display: flex;
-    animation: dialog-container-entry 0.2s;
-}
-
-@keyframes dialog-container-entry {
-    0% {
-        opacity: 0;
-    }
-
-    100% {
-        opacity: 1;
-    }
-}
-
-.dialog {
-    background-color: white;
-    box-shadow: 0 0 12px rgba(0,0,0,0.6);
-    display: flex;
-    flex-direction: column;
-    z-index: 2000;
-    align-self: center;
-    margin: auto;
-    width: 700px;
-    max-height: calc(100% - 3rem);
-    animation: dialog-entry 0.4s;
-    animation-timing-function: cubic-bezier(0.075, 0.820, 0.165, 1.000);
-}
-
-@keyframes dialog-entry {
-    0% {
-        transform: translateY(30px) scale(0.95);
-    }
-
-    100% {
-        transform: translateX(0px) scale(1.0);
-    }
-}
-
-.dialog-title {
-    background-color: #444;
-    color: #fff2cc;
-    padding: 1.3rem 2rem;
-}
-
-    .dialog-title h2 {
-        color: white;
-        font-size: 1.4rem;
-        margin: 0;
-        font-family: 'Bahnschrift', Arial, Helvetica, sans-serif;
-        text-transform: uppercase;
-        line-height: 1.3rem;
-    }
-
-.dialog-body {
-    flex-grow: 1;
-    padding: 0.5rem 3rem 1rem 0;
-}
-
-.dialog-buttons {
-    height: 4rem;
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    background-color: #eee;
-    padding: 0 1rem;
-}
-
-.dialog-body > div {
-    display: flex;
-    margin-top: 1rem;
-    align-items: center;
-}
-
-.dialog-body label {
-    text-align: right;
-    width: 200px;
-    margin: 0 1.5rem;
-}
-
-.dialog-body input, .dialog-body select {
-    flex-grow: 1;
-    width: unset;
-}
-
-.dialog-body .size-label {
-    min-width: 110px;
-    text-align: right;
-}
-
-.dialog .toppings {
-    text-align: center;
-    display: block;
-    padding-left: 4rem;
-}
-
-.dialog .topping {
-    display: inline-block;
-    background-color: #a04343;
-    color: white;
-    padding: 0.2rem 1rem;
-    border-radius: 2rem;
-    margin: 0.4rem 0.3rem;
-    font-weight: 700;
-}
-
-.dialog .topping-price {
-    font-weight: 100;
-    font-size: 0.8rem;
-}
-
-    .dialog .topping-price::before {
-        content: '￥';
-    }
-
-.delete-topping {
-    background: none;
-    border: none;
-    color: white;
-    padding: 0.2rem 0.2rem 0.3rem 0.2rem;
-    cursor: pointer;
-}
-
-    .delete-topping:hover {
-        color: yellow;
-    }
-
-.form-message {
-    padding: 0.5rem;
-    font-weight: 700;
-}
-
-.dialog .price {
-    font-weight: 700;
-    font-size: 1.5rem;
-}
-
-.orders-list .list-group-item {
-    display: flex;
-}
-
-.orders-list .col {
-    margin: auto;
-}
-
-.orders-list h5 {
-    color: #c03939;
-    font-size: 1.3rem;
-    font-weight: 300;
-    margin: 0.2rem 0 0 0;
-    font-family: 'Bahnschrift', Arial, Helvetica, sans-serif;
-    text-transform: uppercase;
-}
-
-.track-order {
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-    .track-order > div {
-        overflow-y: hidden;
-    }
-
 
 a.sign-in {
     background: none;
@@ -438,16 +188,6 @@ a.sign-in {
         animation: progressbar-slide 1s infinite;
         animation-timing-function: ease-in-out;
     }
-
-
-
-.invalid {
-    outline: 1px solid red;
-}
-
-.validation-message {
-    color: red;
-}
 
 #blazor-error-ui {
     background: lightyellow;
