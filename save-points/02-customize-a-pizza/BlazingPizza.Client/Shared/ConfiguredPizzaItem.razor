@@ -1,16 +1,21 @@
-﻿<div class="cart-item">
-    <a @onclick="OnRemoved" class="delete-item">x</a>
-    <div class="title">@(Pizza.Size)" @Pizza.Special.Name</div>
-    <ul>
+﻿
+<Card Size="small" Style="margin-bottom:8px">
+    <TitleTemplate>
+        @(Pizza.Size)" @Pizza.Special.Name
+    </TitleTemplate>
+    <Extra>
+        <Icon Type="close" Theme="outline" OnClick="OnRemoved" />
+    </Extra>
+    <Body>
         @foreach (var topping in Pizza.Toppings)
         {
-            <li>+ @topping.Topping.Name</li>
+            <Text>+ </Text>@topping.Topping.Name <br />
         }
-    </ul>
-    <div class="item-price">
-        @Pizza.GetFormattedTotalPrice()
-    </div>
-</div>
+        <Statistic Value="@Pizza.GetFormattedTotalPrice()" Prefix="￥" />
+
+    </Body>
+
+</Card>
 
 @code {
     [Parameter] public Pizza Pizza { get; set; }
