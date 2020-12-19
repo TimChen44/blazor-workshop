@@ -4,22 +4,21 @@
 @inject OrdersClient OrdersClient
 @implements IDisposable
 
-
 @if (invalidOrder)
 {
     <Result Status="warning" Title="Sorry, this order could not be loaded." />
 }
 else if (orderWithStatus == null)
 {
-<Spin Spinning="true">Loading...</Spin>
+    <Spin Spinning="true">Loading...</Spin>
 }
 else
 {
-    <Card Title="Default size card" Style="margin:15px">
+    <Card Style="margin:15px">
         <TitleTemplate>
             <div style="display: flex; align-items: flex-start;">
                 <h2>
-                    Order placed @orderWithStatus.Order.CreatedTime.ToLongDateString()
+                    Order placed @orderWithStatus.Order.CreatedTime.ToShortDateString();
                 </h2>
                 <Tag Color="green">Status:@orderWithStatus.StatusText</Tag>
             </div>

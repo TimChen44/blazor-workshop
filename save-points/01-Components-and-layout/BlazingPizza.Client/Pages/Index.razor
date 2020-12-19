@@ -2,28 +2,36 @@
 @inject HttpClient HttpClient
 
 <div class="main">
-    <ul class="pizza-cards">
+    <Spin Spinning="loading">
         @if (specials != null)
         {
-            @foreach (var special in specials)
-            {
-                <li style="background-image: url('@special.ImageUrl')">
-                    <div class="pizza-info">
-                        <span class="title">@special.Name</span>
-                        @special.Description
-                        <span class="price">@special.GetFormattedBasePrice()</span>
-                    </div>
-                </li>
-            }
+            <div style="display: flex; flex-wrap: wrap;">
+                @foreach (var special in specials)
+                {
+                    <Card Loading="loading" Hoverable Style="width: 23%;margin:1%">
+                        <Cover>
+                            <img src="@special.ImageUrl" style="height:250px" />
+                        </Cover>
+                        <ChildContent>
+                            <div style=" display: flex; flex-direction: row; justify-content: space-between; margin: -12px;">
+                                <CardMeta Title="@special.Name" Description="@special.GetFormattedBasePrice()" />
+                            </div>
+                        </ChildContent>
+                    </Card>
+                }
+            </div>
         }
-    </ul>
+    </Spin>
 </div>
 
 @code {
     List<PizzaSpecial> specials;
+    bool loading = false;
 
     protected override async Task OnInitializedAsync()
     {
+        loading = true;
         specials = await HttpClient.GetFromJsonAsync<List<PizzaSpecial>>("specials");
+        loading = false;
     }
 }
