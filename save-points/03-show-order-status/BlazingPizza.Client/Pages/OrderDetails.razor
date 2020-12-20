@@ -1,37 +1,41 @@
 ﻿@page "/myorders/{orderId:int}"
+@attribute [Authorize]
 @using System.Threading
-@inject HttpClient HttpClient
+@inject OrdersClient OrdersClient
 @implements IDisposable
 
-<div class="main">
-    @if (invalidOrder)
-    {
-        <h2>Nope</h2>
-        <p>Sorry, this order could not be loaded.</p>
-    }
-    else if (orderWithStatus == null)
-    {
-        <text>Loading...</text>
-    }
-    else
-    {
-        <div class="track-order">
-            <div class="track-order-title">
+@if (invalidOrder)
+{
+    <Result Status="warning" Title="Sorry, this order could not be loaded." />
+}
+else if (orderWithStatus == null)
+{
+    <Spin Spinning="true">Loading...</Spin>
+}
+else
+{
+    <Card Style="margin:15px">
+        <TitleTemplate>
+            <div style="display: flex; align-items: flex-start;">
                 <h2>
-                    Order placed @orderWithStatus.Order.CreatedTime.ToLongDateString()
+                    Order placed @orderWithStatus.Order.CreatedTime.ToShortDateString();
                 </h2>
-                <p class="ml-auto mb-0">
-                    Status: <strong>@orderWithStatus.StatusText</strong>
-                </p>
+                <Tag Color="green">Status:@orderWithStatus.StatusText</Tag>
             </div>
-            <div class="track-order-body">
-                <div class="track-order-details">
+        </TitleTemplate>
+        <Body>
+            <Row>
+                <AntDesign.Col Span="18">
                     <OrderReview Order="orderWithStatus.Order" />
-                </div>
-            </div>
-        </div>
-    }
-</div>
+                </AntDesign.Col>
+                <AntDesign.Col Span="6">
+                    <Map Zoom="13" Markers="orderWithStatus.MapMarkers" />
+                </AntDesign.Col>
+            </Row>
+        </Body>
+    </Card>
+
+}
 
 @code {
     [Parameter] public int OrderId { get; set; }
@@ -51,13 +55,13 @@
 
     private async void PollForUpdates()
     {
+        invalidOrder = false;
         pollingCancellationToken = new CancellationTokenSource();
         while (!pollingCancellationToken.IsCancellationRequested)
         {
             try
             {
-                invalidOrder = false;
-                orderWithStatus = await HttpClient.GetFromJsonAsync<OrderWithStatus>($"orders/{OrderId}");
+                orderWithStatus = await OrdersClient.GetOrder(OrderId);
                 StateHasChanged();
 
                 if (orderWithStatus.IsDelivered)
@@ -68,6 +72,11 @@
                 {
                     await Task.Delay(4000);
                 }
+            }
+            catch (AccessTokenNotAvailableException ex)
+            {
+                pollingCancellationToken.Cancel();
+                ex.Redirect();
             }
             catch (Exception ex)
             {

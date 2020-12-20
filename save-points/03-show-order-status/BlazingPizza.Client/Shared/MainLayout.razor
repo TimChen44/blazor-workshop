@@ -1,21 +1,21 @@
 ﻿@inherits LayoutComponentBase
-
-<div class="top-bar">
-    <a class="logo" href="">
-        <img src="img/logo.svg" />
-    </a>
-
-    <NavLink href="" class="nav-tab" Match="NavLinkMatch.All">
-        <img src="img/pizza-slice.svg" />
-        <div>Get Pizza</div>
-    </NavLink>
-
-    <NavLink href="myorders" class="nav-tab">
-        <img src="img/bike.svg" />
-        <div>My Orders</div>
-    </NavLink>
-</div>
-
-<div class="content">
-    @Body
+<div style="display:flex;flex-direction:column;height:100vh">
+    <Menu Mode=MenuMode.Horizontal Theme="MenuTheme.Dark">
+        <a class="logo" href="">
+            <img src="img/logo.svg" />
+        </a>
+        <MenuItem RouterMatch="NavLinkMatch.All" RouterLink="">
+            <img class="bar-img" src="img/pizza-slice.svg" />
+            Get Pizza
+        </MenuItem>
+        <AuthorizeView>
+            <MenuItem RouterLink="myorders">
+                <img class="bar-img" src="img/bike.svg" />
+                My Orders
+            </MenuItem>
+        </AuthorizeView>
+    </Menu>
+    <div style="flex-grow: 1;">
+        @Body
+    </div>
 </div>

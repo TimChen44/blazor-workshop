@@ -1,48 +1,50 @@
 ﻿@page "/myorders"
-@inject HttpClient HttpClient
+@attribute [Authorize]
+@inject OrdersClient OrdersClient
 
-<div class="main">
-    @if (ordersWithStatus == null)
-    {
-        <text>Loading...</text>
-    }
-    else if (!ordersWithStatus.Any())
-    {
-        <h2>No orders placed</h2>
-        <a class="btn btn-success" href="">Order some pizza</a>
-    }
-    else
-    {
-        <div class="list-group orders-list">
-            @foreach (var item in ordersWithStatus)
-            {
-                <div class="list-group-item">
-                    <div class="col">
-                        <h5>@item.Order.CreatedTime.ToLongDateString()</h5>
-                        Items:
-                        <strong>@item.Order.Pizzas.Count()</strong>;
-                        Total price:
-                        <strong>£@item.Order.GetFormattedTotalPrice()</strong>
-                    </div>
-                    <div class="col">
-                        Status: <strong>@item.StatusText</strong>
-                    </div>
-                    <div class="col flex-grow-0">
-                        <a href="myorders/@item.Order.OrderId" class="btn btn-success">
-                            Track &gt;
-                        </a>
-                    </div>
-                </div>
-            }
-        </div>
-    }
+<div style="margin:15px">
+    <TemplatedList Loader="@LoadOrders">
+        <Loading>Loading...</Loading>
+        <Empty>
+            <h2>No orders placed</h2>
+            <Button href="">Order some pizza</Button>
+        </Empty>
+        <Item Context="item">
+            <ListItem Actions="@(new[] { itemText(("Items:",item.Order.Pizzas.Count().ToString()))
+                                 ,itemText(("Total price:",$"￥{item.Order.GetFormattedTotalPrice()}"))
+                                 ,itemTrack($"myorders/{item.Order.OrderId}")})">
+                <Text Strong>@item.Order.CreatedTime.ToLongDateString()</Text>
+            </ListItem>
+        </Item>
+    </TemplatedList>
 </div>
 
 @code {
-    IEnumerable<OrderWithStatus> ordersWithStatus;
 
-    protected override async Task OnParametersSetAsync()
-    {
-        ordersWithStatus = await HttpClient.GetFromJsonAsync<List<OrderWithStatus>>("orders");
-    }
+    RenderFragment<(string title, string value)> itemText = context =>
+    @<Template>
+        <Space>
+            <SpaceItem>@context.title</SpaceItem>
+            <Text Strong>@context.value</Text>
+        </Space>
+    </Template>;
+
+RenderFragment<string> itemTrack = context =>
+@<Template>
+    <a href="@context">Track &gt;</a>
+</Template>;
+
+async Task<IEnumerable<OrderWithStatus>> LoadOrders()
+{
+var ordersWithStatus = Enumerable.Empty<OrderWithStatus>();
+try
+{
+ordersWithStatus = await OrdersClient.GetOrders();
+}
+catch (AccessTokenNotAvailableException ex)
+{
+ex.Redirect();
+}
+return ordersWithStatus;
+}
 }

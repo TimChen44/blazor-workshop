@@ -1,27 +1,27 @@
 ﻿@foreach (var pizza in Order.Pizzas)
 {
-    <p>
-        <strong>
-            @(pizza.Size)"
-            @pizza.Special.Name
-            (£@pizza.GetFormattedTotalPrice())
-        </strong>
-    </p>
-
-    <ul>
-        @foreach (var topping in pizza.Toppings)
-        {
-            <li>+ @topping.Topping.Name</li>
-        }
-    </ul>
+    <AntList DataSource="@pizza.Toppings" Size="small" Style="margin-bottom:8px">
+        <Header>
+            <Text Strong>
+                @(pizza.Size)"
+                @pizza.Special.Name
+                (￥@pizza.GetFormattedTotalPrice())
+            </Text>
+        </Header>
+        <ChildContent Context="item">
+            <ListItem>
+                + @item.Topping.Name
+            </ListItem>
+        </ChildContent>
+    </AntList>
 }
-
-<p>
-    <strong>
+<Divider></Divider>
+<Paragraph>
+    <Text Strong>
         Total price:
-        £@Order.GetFormattedTotalPrice()
-    </strong>
-</p>
+        ￥@Order.GetFormattedTotalPrice()
+    </Text>
+</Paragraph>
 
 @code {
     [Parameter] public Order Order { get; set; }
